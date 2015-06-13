@@ -2,7 +2,7 @@
 
     Fancy.require ( {
         jQuery: false,
-        Fancy : "1.0.0"
+        Fancy : "1.0.1"
     } );
 
     function preventSelect ( el ) {
@@ -11,7 +11,7 @@
 
     var i       = 1,
         NAME    = "FancyNotify",
-        VERSION = "1.0.0",
+        VERSION = "1.0.1",
         logged  = false;
 
     function FancyNotify ( element, settings ) {
@@ -140,15 +140,9 @@
 
     Fancy.notify     = VERSION;
     Fancy.api.notify = function ( settings ) {
-        if ( this.element.length > 1 ) {
-            var data = [];
-            this.element.each ( function () {
-                data.push ( new FancyNotify ( $ ( this ), settings ) );
-            } );
-            return data;
-        } else {
-            return new FancyNotify ( this.element, settings );
-        }
+        this.set ( NAME, function ( el ) {
+            return new FancyNotify ( el, settings );
+        } );
     };
 
     $ ( document ).ready ( function () {
