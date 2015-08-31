@@ -1,22 +1,18 @@
-(function ( window, $ ) {
+(function( window, $ ) {
 
-    Fancy.require ( {
+    Fancy.require( {
         jQuery: false,
-        Fancy : "1.0.3"
+        Fancy : "1.0.7"
     } );
-
-    function preventSelect ( el ) {
-        return el.on ( "selectstart", false ).attr ( 'unselectable', "on" ).css ( "userSelect", "none" );
-    }
 
     var i       = 1,
         NAME    = "FancyNotify",
-        VERSION = "1.0.2",
+        VERSION = "1.0.4",
         logged  = false;
 
-    function FancyNotify ( element, settings ) {
+    function FancyNotify( element, settings ) {
         var SELF      = this;
-        SELF.settings = $.extend ( {}, Fancy.settings [ NAME ], settings );
+        SELF.settings = $.extend( {}, Fancy.settings [ NAME ], settings );
         var pattern   = {
             title  : {
                 type    : "String|Number",
@@ -37,97 +33,96 @@
                 type: "Boolean"
             }
         };
-        Fancy.check ( SELF.settings, pattern );
+        Fancy.check( SELF.settings, pattern );
         SELF.id       = i;
         SELF.element  = element;
         SELF.version  = VERSION;
         SELF.name     = NAME;
-        if ( !logged ) {
+        if( !logged ) {
             logged = true;
-            Fancy.version ( SELF );
+            Fancy.version( SELF );
         }
-        if ( element.selector && SELF.settings.steady ) {
-            localStorage [ NAME + "-" + i ] = JSON.stringify ( {
+        if( element.selector && SELF.settings.steady ) {
+            localStorage [ NAME + "-" + i ] = JSON.stringify( {
                 element : element.selector,
                 settings: settings
             } );
         }
 
         SELF.html = {
-            wrapper: preventSelect ( $ ( "<div/>", {
+            wrapper: Fancy.preventSelect( $( "<div/>", {
                 id     : NAME + "-wrapper-" + SELF.id,
                 "class": NAME + "-wrapper"
             } ) ),
-            inner  : $ ( "<div/>", {
+            inner  : $( "<div/>", {
                 id     : NAME + "-inner-" + SELF.id,
                 "class": NAME + "-inner"
             } ),
-            content: $ ( "<div/>", {
+            content: $( "<div/>", {
                 id     : NAME + "-content-" + SELF.id,
                 "class": NAME + "-content"
             } ),
-            title  : $ ( "<div/>", {
+            title  : $( "<div/>", {
                 id     : NAME + "-title-" + SELF.id,
                 "class": NAME + "-title",
                 html   : SELF.settings.title
             } ),
-            body   : $ ( "<div/>", {
+            body   : $( "<div/>", {
                 id     : NAME + "-body-" + SELF.id,
                 "class": NAME + "-body",
                 html   : SELF.settings.text
             } ),
-            icon   : $ ( "<div/>", {
+            icon   : $( "<div/>", {
                 id     : NAME + "-icon-" + SELF.id,
                 "class": NAME + "-icon"
             } ),
-            buttons: $ ( "<div/>", {
+            buttons: $( "<div/>", {
                 id     : NAME + "-buttons-" + SELF.id,
                 "class": NAME + "-buttons"
             } ),
-            close  : $ ( "<div/>", {
+            close  : $( "<div/>", {
                 id     : NAME + "-close-" + SELF.id,
                 "class": NAME + "-close"
             } )
         };
 
-        if ( SELF.settings.buttons.length ) {
-            SELF.settings.buttons.forEach ( function ( it ) {
-                var btn = $ ( "<div/>", {
+        if( SELF.settings.buttons.length ) {
+            SELF.settings.buttons.forEach( function( it ) {
+                var btn = $( "<div/>", {
                     "class": NAME + "-button",
                     text   : it.title,
                     style  : "width: " + ( 100 / SELF.settings.buttons.length ) + "%"
                 } );
-                SELF.html.buttons.append ( btn );
-                btn.on ( "click", function () {
-                    it.click.call ( SELF, it );
+                SELF.html.buttons.append( btn );
+                btn.on( "click", function() {
+                    it.click.call( SELF, it );
                 } );
             } );
         }
 
-        SELF.html.wrapper.append ( SELF.html.inner.append ( SELF.html.content.append ( SELF.html.icon ).append ( SELF.html.title ).append ( SELF.html.body ) ).append ( SELF.html.close ) ).append ( SELF.html.buttons );
+        SELF.html.wrapper.append( SELF.html.inner.append( SELF.html.content.append( SELF.html.icon ).append( SELF.html.title ).append( SELF.html.body ) ).append( SELF.html.close ) ).append( SELF.html.buttons );
 
-        if ( typeof SELF.settings.icon === "object" ) {
-            SELF.html.icon.append ( SELF.settings.icon );
+        if( typeof SELF.settings.icon === "object" ) {
+            SELF.html.icon.append( SELF.settings.icon );
         } else {
-            SELF.html.icon.addClass ( SELF.settings.icon );
+            SELF.html.icon.addClass( SELF.settings.icon );
         }
 
-        SELF.html.close.on ( "click", function () {
-            SELF.close ();
+        SELF.html.close.on( "click", function() {
+            SELF.close();
         } );
 
-        SELF.element.append ( SELF.html.wrapper );
+        SELF.element.append( SELF.html.wrapper );
         i++;
 
     }
 
-
     FancyNotify.api = FancyNotify.prototype = {};
     FancyNotify.api.version = VERSION;
     FancyNotify.api.name    = NAME;
-    FancyNotify.api.close   = function () {
-        localStorage.removeItem ( NAME + "-" + this.id );
-        this.html.wrapper.remove ();
+    FancyNotify.api.close   = function() {
+        localStorage.removeItem( NAME + "-" + this.id );
+        this.html.wrapper.remove();
     };
 
     Fancy.settings [ NAME ] = {
@@ -138,20 +133,21 @@
         steady : false
     };
 
-    Fancy.notify     = VERSION;
-    Fancy.api.notify = function ( settings ) {
-        this.set ( NAME, function ( el ) {
-            return new FancyNotify ( el, settings );
+    Fancy.notify        = VERSION;
+    Fancy.api.notify    = function( settings ) {
+        this.set( NAME, function( el ) {
+            return new FancyNotify( el, settings );
         }, false );
     };
-
-    $ ( document ).ready ( function () {
-        for ( var item in localStorage ) {
-            if ( localStorage.hasOwnProperty ( item ) ) {
-                if ( item.indexOf ( NAME ) === 0 ) {
-                    new FancyNotify ( $ ( JSON.parse ( localStorage [ item ] ).element ), JSON.parse ( localStorage [ item ] ).settings );
+    Fancy.notifyFromCache = function() {
+        for( var item in localStorage ) {
+            if( localStorage.hasOwnProperty( item ) ) {
+                if( item.indexOf( NAME ) === 0 ) {
+                    new FancyNotify( $( JSON.parse( localStorage [ item ] ).element ), JSON.parse( localStorage [ item ] ).settings );
                 }
             }
         }
-    } );
-}) ( window, jQuery );
+    };
+
+    $( document ).ready( Fancy.notifyFromCache );
+})( window, jQuery );
