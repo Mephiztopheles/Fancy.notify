@@ -35,6 +35,6 @@
   "license": "MIT",
   "dependencies": {
     "jquery": ">=1.9.1",
-    "fancy": ">= 1.0.7"
+    "fancy": ">=1.0.6"
   }
 }
