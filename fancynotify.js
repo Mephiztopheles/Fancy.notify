@@ -2,12 +2,12 @@
 
     Fancy.require( {
         jQuery: false,
-        Fancy : "1.0.7"
+        Fancy : "1.0.6"
     } );
 
     var i       = 1,
         NAME    = "FancyNotify",
-        VERSION = "1.0.4",
+        VERSION = "1.0.3",
         logged  = false;
 
     function FancyNotify( element, settings ) {
