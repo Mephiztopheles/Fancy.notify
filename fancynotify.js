@@ -117,6 +117,7 @@
         } );
 
         SELF.element.append( SELF.html.wrapper );
+        SELF.settings.onBeforeOpen.call( SELF );
         setTimeout( function() {
             SELF.html.wrapper.addClass( "show" )
         }, SELF.settings.showDelay );
@@ -131,19 +132,22 @@
         var SELF = this;
         localStorage.removeItem( NAME + "-" + SELF.id );
         SELF.html.wrapper.addClass( "hide" ).removeClass( "show" );
+        SELF.settings.onBeforeClose.call( SELF );
         setTimeout( function() {
             SELF.html.wrapper.remove();
         }, SELF.settings.closeDelay );
     };
 
     Fancy.settings [ NAME ] = {
-        title     : "",
-        text      : "",
-        buttons   : [],
-        icon      : "",
-        steady    : false,
-        closeDelay: 1000,
-        showDelay : 20
+        title        : "",
+        text         : "",
+        buttons      : [],
+        icon         : "",
+        steady       : false,
+        closeDelay   : 1000,
+        showDelay    : 20,
+        onBeforeClose: function() {},
+        onBeforeOpen : function() {}
     };
 
     Fancy.notify          = VERSION;
