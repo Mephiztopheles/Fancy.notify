@@ -7,11 +7,15 @@
 
     var i       = 1,
         NAME    = "FancyNotify",
-        VERSION = "1.0.3",
+        VERSION = "1.0.4",
         logged  = false;
 
     function FancyNotify( element, settings ) {
-        var SELF      = this;
+        var SELF = this;
+
+        if( $( "#" + NAME + "-wrapper-" + settings.id ).length )
+            return;
+
         SELF.settings = $.extend( {}, Fancy.settings [ NAME ], settings );
         var pattern   = {
             title  : {
@@ -42,7 +46,7 @@
             logged = true;
             Fancy.version( SELF );
         }
-        if( element.selector && SELF.settings.steady ) {
+        if( element.selector && SELF.settings.steady && !localStorage [ NAME + "-" + i ] ) {
             localStorage [ NAME + "-" + i ] = JSON.stringify( {
                 element : element.selector,
                 settings: settings
@@ -113,6 +117,9 @@
         } );
 
         SELF.element.append( SELF.html.wrapper );
+        setTimeout( function() {
+            SELF.html.wrapper.addClass( "show" )
+        }, SELF.settings.showDelay );
         i++;
 
     }
@@ -121,20 +128,26 @@
     FancyNotify.api.version = VERSION;
     FancyNotify.api.name    = NAME;
     FancyNotify.api.close   = function() {
-        localStorage.removeItem( NAME + "-" + this.id );
-        this.html.wrapper.remove();
+        var SELF = this;
+        localStorage.removeItem( NAME + "-" + SELF.id );
+        SELF.html.wrapper.addClass( "hide" ).removeClass( "show" );
+        setTimeout( function() {
+            SELF.html.wrapper.remove();
+        }, SELF.settings.closeDelay );
     };
 
     Fancy.settings [ NAME ] = {
-        title  : "",
-        text   : "",
-        buttons: [],
-        icon   : "",
-        steady : false
+        title     : "",
+        text      : "",
+        buttons   : [],
+        icon      : "",
+        steady    : false,
+        closeDelay: 1000,
+        showDelay : 20
     };
 
-    Fancy.notify        = VERSION;
-    Fancy.api.notify    = function( settings ) {
+    Fancy.notify          = VERSION;
+    Fancy.api.notify      = function( settings ) {
         this.set( NAME, function( el ) {
             return new FancyNotify( el, settings );
         }, false );
@@ -143,11 +156,9 @@
         for( var item in localStorage ) {
             if( localStorage.hasOwnProperty( item ) ) {
                 if( item.indexOf( NAME ) === 0 ) {
-                    new FancyNotify( $( JSON.parse( localStorage [ item ] ).element ), JSON.parse( localStorage [ item ] ).settings );
+                    new FancyNotify( $( JSON.parse( localStorage [ item ] ).element ), $.extend( JSON.parse( localStorage [ item ] ).settings, { id: item.replace( NAME + "-", "" ) } ) );
                 }
             }
         }
     };
-
-    $( document ).ready( Fancy.notifyFromCache );
 })( window, jQuery );

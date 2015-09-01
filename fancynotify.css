@@ -1,15 +1,51 @@
+@-webkit-keyframes show {
+    100% { right : 0; }
+}
+
+@keyframes show {
+    100% { right : 0; }
+}
+
+@-webkit-keyframes hide {
+    100% { right : -100%; }
+}
+
+@keyframes hide {
+    100% { right : -100%; }
+}
+
+@-webkit-keyframes remove {
+    100% { max-height : 0; }
+}
+
+@keyframes remove {
+    100% { max-height : 0; }
+}
+
 #FancyNotify {
     position : fixed;
     right    : 5px;
     top      : 5px;
     z-index  : 100000;
+    overflow : hidden;
 }
 
 .FancyNotify-wrapper {
     position      : relative;
-    border        : 1px solid #cecece;
+    border        : 1px solid #CECECE;
     margin-bottom : 5px;
     background    : #FFF;
+    right         : -100%;
+    max-height    : 72px;
+    transition    : all 0.5s linear 0.5s, right 0.5s;
+}
+
+.FancyNotify-wrapper.show {
+    right : 0;
+}
+
+.FancyNotify-wrapper.hide {
+    max-height : 0;
 }
 
 .FancyNotify-inner {
@@ -45,7 +81,7 @@
     width      : 50px;
     float      : left;
     padding    : 10px;
-    background : #cecece;
+    background : #CECECE;
     position   : absolute;
     left       : 0;
     top        : 0;

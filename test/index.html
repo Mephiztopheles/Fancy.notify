@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fancy Menu</title>
+    <link href="../fancynotify.css" rel="stylesheet" type="text/css">
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/fancy/fancy.min.js"></script>
+    <script src="../fancynotify.js"></script>
+    <style>
+        #FancyNotify {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="FancyNotify"></div>
+</body>
+<script>
+    $(function(){
+        Fancy( "#FancyNotify" ).notify( {
+            title : "Notify!",
+            text  : "Test",
+            steady: true
+        } );
+        Fancy( "#FancyNotify" ).notify( {
+            title : "Notify!",
+            text  : "Test"
+        } );
+        Fancy( "#FancyNotify" ).notify( {
+            title : "Notify!",
+            text  : "Test"
+        } );
+    })
+</script>
+</html>
