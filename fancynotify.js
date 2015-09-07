@@ -13,7 +13,6 @@
     function FancyNotify( element, settings ) {
         var SELF = this;
 
-        console.log( settings.id )
         if ( $( "#" + NAME + "-wrapper-" + settings.id ).length )
             return;
 
