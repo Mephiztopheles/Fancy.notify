@@ -7,13 +7,13 @@
 
     var i       = 1,
         NAME    = "FancyNotify",
-        VERSION = "1.0.5",
+        VERSION = "1.0.6",
         logged  = false;
 
     function FancyNotify( element, settings ) {
         var SELF = this;
 
-        if ( $( "#" + NAME + "-wrapper-" + settings.id ).length )
+        if ( settings && $( "#" + NAME + "-wrapper-" + settings.id ).length )
             return;
 
         SELF.settings = $.extend( {}, Fancy.settings [ NAME ], settings );
