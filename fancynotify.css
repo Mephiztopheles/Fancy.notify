@@ -36,8 +36,9 @@
     margin-bottom : 5px;
     background    : #FFF;
     right         : -100%;
-    max-height    : 72px;
+    max-height    : 98px;
     transition    : all 0.5s linear 0.5s, right 0.5s;
+    overflow      : hidden;
 }
 
 .FancyNotify-wrapper.show {
@@ -78,15 +79,17 @@
 }
 
 .FancyNotify-icon {
-    width      : 50px;
-    float      : left;
-    padding    : 10px;
-    background : #CECECE;
-    position   : absolute;
-    left       : 0;
-    top        : 0;
-    bottom     : 0;
-    box-sizing : initial;
+    width       : 50px;
+    float       : left;
+    padding     : 10px;
+    background  : #CECECE;
+    position    : absolute;
+    left        : 0;
+    top         : 0;
+    bottom      : 0;
+    box-sizing  : initial;
+    text-align  : center;
+    line-height : 50px;
 }
 
 .FancyNotify-icon img {
