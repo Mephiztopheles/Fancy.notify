@@ -7,7 +7,7 @@
 
     var i       = 1,
         NAME    = "FancyNotify",
-        VERSION = "1.0.6",
+        VERSION = "1.0.7",
         logged  = false;
 
     function FancyNotify( element, settings ) {
@@ -153,7 +153,7 @@
 
     Fancy.notify          = VERSION;
     Fancy.api.notify      = function ( settings ) {
-        this.set( NAME, function ( el ) {
+        return this.set( NAME, function ( el ) {
             return new FancyNotify( el, settings );
         }, false );
     };
