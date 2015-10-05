@@ -2,7 +2,7 @@
   "name": "fancy-notify",
   "title": "FancyNotify",
   "description": "JavaScript Notification-plugin for Fancy",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "fancynotify.js",
   "homepage": "http://mephiztopheles.wtf/fancy-notify",
   "author": "Markus Ahrweiler",

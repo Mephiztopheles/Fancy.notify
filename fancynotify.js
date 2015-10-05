@@ -7,7 +7,7 @@
 
     var i       = 1,
         NAME    = "FancyNotify",
-        VERSION = "1.0.7",
+        VERSION = "1.0.8",
         logged  = false;
 
     function FancyNotify( element, settings ) {
