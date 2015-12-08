@@ -6,7 +6,7 @@
     } );
 
     var i       = 1,
-        NAME    = "Fancy.notify",
+        NAME    = "FancyNotify",
         VERSION = "1.1.0",
         logged  = false;
 
