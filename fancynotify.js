@@ -2,12 +2,12 @@
 
     Fancy.require( {
         jQuery: false,
-        Fancy : "1.0.6"
+        Fancy : "1.1.2"
     } );
 
     var i       = 1,
-        NAME    = "FancyNotify",
-        VERSION = "1.0.8",
+        NAME    = "Fancy.notify",
+        VERSION = "1.1.0",
         logged  = false;
 
     function FancyNotify( element, settings ) {
@@ -54,10 +54,10 @@
         }
 
         SELF.html = {
-            wrapper: Fancy.preventSelect( $( "<div/>", {
+            wrapper: Fancy( $( "<div/>", {
                 id     : NAME + "-wrapper-" + SELF.id,
                 "class": NAME + "-wrapper"
-            } ) ),
+            } ) ).preventSelect(),
             inner  : $( "<div/>", {
                 id     : NAME + "-inner-" + SELF.id,
                 "class": NAME + "-inner"
